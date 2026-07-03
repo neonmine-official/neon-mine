@@ -367,3 +367,303 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeonMine - Cloud Mining</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
+        }
+        body {
+            background-color: #0b071e;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 100vh;
+            padding: 20px 15px 80px 15px;
+            overflow: hidden;
+        }
+        .tab-content {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+        }
+        .tab-content.active {
+            display: flex;
+        }
+        .header {
+            text-align: center;
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #8b5cf6;
+            margin-bottom: 5px;
+        }
+        .balance-container {
+            font-size: 45px;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 0 0 25px rgba(139, 92, 246, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        .currency {
+            color: #a78bfa;
+            font-size: 30px;
+        }
+        .mining-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            height: 280px;
+            margin-top: 20px;
+        }
+        .neon-circle {
+            width: 230px;
+            height: 230px;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-top: 4px solid #8b5cf6;
+            border-right: 4px solid #ec4899;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 35px rgba(139, 92, 246, 0.3);
+        }
+        .neon-circle.active {
+            animation: rotateCircle 1.5s linear infinite;
+        }
+        .inner-button {
+            width: 190px;
+            height: 190px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #1e1145 0%, #0f0926 100%);
+            border: 2px solid #3b2082;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: inset 0 0 25px rgba(139, 92, 246, 0.4);
+            transition: transform 0.1s ease;
+            position: absolute;
+        }
+        .inner-button:active {
+            transform: scale(0.95);
+        }
+        .status-text {
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: #a78bfa;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+        .speed-text {
+            font-size: 11px;
+            color: #8b5cf6;
+            margin-top: 4px;
+        }
+        .stats-container {
+            width: 100%;
+            max-width: 360px;
+            background: rgba(30, 17, 69, 0.4);
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .stats-title {
+            font-size: 16px;
+            color: #a78bfa;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+            padding-bottom: 8px;
+        }
+        .panel-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 14px;
+        }
+        .panel-row:last-child {
+            border-bottom: none;
+        }
+        .panel-label {
+            color: #94a3b8;
+        }
+        .panel-value {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .status-online {
+            color: #10b981;
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
+        .withdraw-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+            border: none;
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            margin-top: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 65px;
+            background: #130b32;
+            border-top: 1px solid rgba(139, 92, 246, 0.3);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 50%;
+            height: 100%;
+            justify-content: center;
+        }
+        .nav-item.active {
+            color: #a78bfa;
+            background: rgba(139, 92, 246, 0.05);
+        }
+        @keyframes rotateCircle {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>საერთო ბალანსი</h1>
+        <div class="balance-container">
+            <span class="currency">$</span><span id="user-balance">1.0000</span>
+        </div>
+    </div>
+
+    <div id="tab-miner" class="tab-content active">
+        <div class="mining-section">
+            <div class="neon-circle" id="circle-anim"></div>
+            <div class="inner-button" id="mine-btn">
+                <span class="status-text" id="btn-status">START MINE</span>
+                <span class="speed-text">⚡ Cloud Power x1</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="tab-stats" class="tab-content">
+        <div class="stats-container">
+            <div class="stats-title">სერვერის სტატუსი</div>
+            <div class="panel-row">
+                <span class="panel-label">კავშირი:</span>
+                <span class="panel-value status-online">● ONLINE</span>
+            </div>
+            <div class="panel-row">
+                <span class="panel-label">პლატფორმა:</span>
+                <span class="panel-value">NeonMine Premium</span>
+            </div>
+            <div class="panel-row">
+                <span class="panel-label">აქტიური მაინერები:</span>
+                <span class="panel-value" style="color: #ec4899;">1,248 Node</span>
+            </div>
+            
+            <div class="stats-title" style="margin-top: 20px;">ფინანსები</div>
+            <div class="panel-row">
+                <span class="panel-label">მინიმალური გატანა:</span>
+                <span class="panel-value">$10.00</span>
+            </div>
+            
+            <button class="withdraw-btn" onclick="alert('თანხის გასატანად ბალანსი უნდა შეადგენდეს მინიმუმ $10.00-ს')">💰 თანხის გატანა</button>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <div id="btn-tab-miner" class="nav-item active" onclick="switchTab('miner')">
+            <span>🚀 მაინერი</span>
+        </div>
+        <div id="btn-tab-stats" class="nav-item" onclick="switchTab('stats')">
+            <span>📊 საფულე</span>
+        </div>
+    </div>
+
+    <script>
+        let balance = 1.0000;
+        let isMining = false;
+        let intervalId = null;
+
+        const balanceEl = document.getElementById('user-balance');
+        const mineBtn = document.getElementById('mine-btn');
+        const circleAnim = document.getElementById('circle-anim');
+        const btnStatus = document.getElementById('btn-status');
+
+        mineBtn.addEventListener('click', () => {
+            if (!isMining) {
+                isMining = true;
+                circleAnim.classList.add('active');
+                btnStatus.innerText = "MINING...";
+                btnStatus.style.color = "#ec4899";
+
+                intervalId = setInterval(() => {
+                    balance += 0.0003; 
+                    balanceEl.innerText = balance.toFixed(4);
+                }, 100);
+            } else {
+                isMining = false;
+                circleAnim.classList.remove('active');
+                btnStatus.innerText = "START MINE";
+                btnStatus.style.color = "#a78bfa";
+                clearInterval(intervalId);
+            }
+        });
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            
+            document.getElementById('tab-' + tabName).classList.add('active');
+            document.getElementById('btn-tab-' + tabName).classList.add('active');
+        }
+    </script>
+</body>
+</html>
