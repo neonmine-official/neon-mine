@@ -21,8 +21,21 @@
             align-items: center;
             justify-content: space-between;
             min-height: 100vh;
-            padding: 25px 15px;
+            padding: 20px 15px 80px 15px; /* ქვედა მენიუსთვის ადგილი */
             overflow: hidden;
+        }
+
+        /* ფანჯრების მართვა */
+        .tab-content {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: flex;
         }
 
         /* ზედა პანელი - ბალანსი */
@@ -30,10 +43,11 @@
             text-align: center;
             width: 100%;
             margin-top: 10px;
+            margin-bottom: 20px;
         }
 
         .header h1 {
-            font-size: 14px;
+            font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 2px;
             color: #8b5cf6;
@@ -41,10 +55,10 @@
         }
 
         .balance-container {
-            font-size: 42px;
+            font-size: 45px;
             font-weight: 800;
             color: #ffffff;
-            text-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+            text-shadow: 0 0 25px rgba(139, 92, 246, 0.7);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -53,22 +67,23 @@
 
         .currency {
             color: #a78bfa;
-            font-size: 28px;
+            font-size: 30px;
         }
 
-        /* ცენტრალური ნაწილი - მბრუნავი ნეონის წრე */
+        /* 💻 პირველი გვერდი: მაინერი */
         .mining-section {
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
             width: 100%;
-            height: 300px;
+            height: 280px;
+            margin-top: 20px;
         }
 
         .neon-circle {
-            width: 220px;
-            height: 220px;
+            width: 230px;
+            height: 230px;
             border-radius: 50%;
             border: 4px solid transparent;
             border-top: 4px solid #8b5cf6;
@@ -77,16 +92,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
+            box-shadow: 0 0 35px rgba(139, 92, 246, 0.3);
         }
 
         .neon-circle.active {
-            animation: rotateCircle 2s linear infinite;
+            animation: rotateCircle 1.5s linear infinite;
         }
 
         .inner-button {
-            width: 180px;
-            height: 180px;
+            width: 190px;
+            height: 190px;
             border-radius: 50%;
             background: radial-gradient(circle, #1e1145 0%, #0f0926 100%);
             border: 2px solid #3b2082;
@@ -95,102 +110,215 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            box-shadow: inset 0 0 20px rgba(139, 92, 246, 0.3);
+            box-shadow: inset 0 0 25px rgba(139, 92, 246, 0.4);
             transition: transform 0.1s ease;
-            position: absolute; /* ტექსტი რომ არ დატრიალდეს */
+            position: absolute;
         }
 
         .inner-button:active {
             transform: scale(0.95);
         }
 
-        .inner-button img {
-            width: 50px;
-            height: 50px;
-            margin-bottom: 8px;
-            filter: drop-shadow(0 0 8px #8b5cf6);
-        }
-
         .status-text {
-            font-size: 15px;
-            font-weight: 700;
-            letter-spacing: 1px;
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
             color: #a78bfa;
             text-transform: uppercase;
+            margin-top: 5px;
         }
 
         .speed-text {
             font-size: 11px;
-            color: #6d28d9;
+            color: #8b5cf6;
             margin-top: 4px;
         }
 
-        /* ქვედა სექცია - სტატისტიკა და ინფორმაცია */
-        .footer-stats {
-            background: rgba(30, 17, 69, 0.5);
-            border: 1px solid rgba(139, 92, 246, 0.2);
+        /* 📊 მეორე გვერდი: სტატისტიკა და საფულე */
+        .stats-container {
             width: 100%;
-            max-width: 350px;
-            border-radius: 16px;
-            padding: 15px;
-            backdrop-filter: blur(10px);
+            max-width: 360px;
+            background: rgba(30, 17, 69, 0.4);
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .stat-row {
+        .stats-title {
+            font-size: 16px;
+            color: #a78bfa;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+            padding-bottom: 8px;
+        }
+
+        .panel-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 13px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 14px;
         }
 
-        .stat-row:last-child {
-            margin-bottom: 0;
+        .panel-row:last-child {
+            border-bottom: none;
         }
 
-        .stat-label {
+        .panel-label {
             color: #94a3b8;
         }
 
-        .stat-value {
-            color: #ec4899;
+        .panel-value {
+            color: #ffffff;
             font-weight: 600;
         }
 
-        /* ანიმაცია წრის ბრუნვისთვის */
+        .status-online {
+            color: #10b981;
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
+
+        .withdraw-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+            border: none;
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            margin-top: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .withdraw-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* 📱 ქვედა მენიუ (Navigation Bar) */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 65px;
+            background: #130b32;
+            border-top: 1px solid rgba(139, 92, 246, 0.3);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.2s;
+            width: 50%;
+            height: 100%;
+            justify-content: center;
+        }
+
+        .nav-item.active {
+            color: #a78bfa;
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        .nav-item svg {
+            width: 22px;
+            height: 22px;
+            margin-bottom: 4px;
+            fill: currentColor;
+        }
+
+        /* ანიმაციები */
         @keyframes rotateCircle {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
+    <!-- ზედა მუდმივი ბალანსი -->
     <div class="header">
-        <h1>შენი ბალანსი</h1>
+        <h1>საერთო ბალანსი</h1>
         <div class="balance-container">
             <span class="currency">$</span><span id="user-balance">1.0000</span>
         </div>
     </div>
 
-    <div class="mining-section">
-        <div class="neon-circle" id="circle-anim"></div>
-        <div class="inner-button" id="mine-btn">
-            <svg width="45" height="45" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#8b5cf6" stroke="#ec4899" stroke-width="1.5" stroke-linejoin="round"/>
-            </svg>
-            <span class="status-text" id="btn-status">START MINE</span>
-            <span class="speed-text" id="mining-speed">⏱️ 24 საათი</span>
+    <!-- 🚀 ფანჯარა 1: მაინერი -->
+    <div id="tab-miner" class="tab-content active">
+        <div class="mining-section">
+            <div class="neon-circle" id="circle-anim"></div>
+            <div class="inner-button" id="mine-btn">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#8b5cf6" stroke="#ec4899" stroke-width="1.5" stroke-linejoin="round"/>
+                </svg>
+                <span class="status-text" id="btn-status">START MINE</span>
+                <span class="speed-text">⚡ Cloud Power x1</span>
+            </div>
         </div>
     </div>
 
-    <div class="footer-stats">
-        <div class="stat-row">
-            <span class="stat-label">პლატფორმა:</span>
-            <span class="stat-value" style="color: #8b5cf6;">NeonMine Cloud v1.0</span>
+    <!-- 📊 ფანჯარა 2: საფულე & სტატისტიკა -->
+    <div id="tab-stats" class="tab-content">
+        <div class="stats-container">
+            <div class="stats-title">სერვერის სტატუსი</div>
+            <div class="panel-row">
+                <span class="panel-label">კავშირი:</span>
+                <span class="panel-value status-online">● ONLINE</span>
+            </div>
+            <div class="panel-row">
+                <span class="panel-label">პლატფორმა:</span>
+                <span class="panel-value">NeonMine Premium</span>
+            </div>
+            <div class="panel-row">
+                <span class="panel-label">აქტიური მაინერები:</span>
+                <span class="panel-value" style="color: #ec4899;">1,248 Node</span>
+            </div>
+            
+            <div class="stats-title" style="margin-top: 20px;">ფინანსები</div>
+            <div class="panel-row">
+                <span class="panel-label">მინიმალური გატანა:</span>
+                <span class="panel-value">$10.00</span>
+            </div>
+            
+            <button class="withdraw-btn" onclick="alert('თანხის გასატანად ბალანსი უნდა შეადგენდეს მინიმუმ $10.00-ს')">💰 თანხის გატანა</button>
         </div>
-        <div class="stat-row">
-            <span class="stat-label">ალგორითმი:</span>
-            <span class="stat-value">🔥 Budzi 95/5 Model</span>
+    </div>
+
+    <!-- 📱 ქვედა ნავიგაცია -->
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="switchTab('miner', this)">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2L2 22h20L12 2zm0 4.18L18.18 19H5.82L12 6.18z"/>
+            </svg>
+            <span>მაინერი</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('stats', this)">
+            <svg viewBox="0 0 24 24">
+                <path d="M21 18v2H3v-2h18zM5 16h3V8H5v8zm6 0h3V4h-3v12zm6 0h3v-5h-3v5z"/>
+            </svg>
+            <span>საფულე</span>
         </div>
     </div>
 
@@ -204,22 +332,19 @@
         const circleAnim = document.getElementById('circle-anim');
         const btnStatus = document.getElementById('btn-status');
 
+        // მაინინგის კლიკი
         mineBtn.addEventListener('click', () => {
             if (!isMining) {
-                // მაინინგის პროცესის დაწყება
                 isMining = true;
                 circleAnim.classList.add('active');
                 btnStatus.innerText = "MINING...";
                 btnStatus.style.color = "#ec4899";
 
-                // იწყება ციფრების მატება ეკრანზე რეალურ დროში (ვიზუალური ეფექტი)
                 intervalId = setInterval(() => {
-                    // მომხმარებლის 5%-იანი წილიდან სიმულაცია წამებში
                     balance += 0.0003; 
                     balanceEl.innerText = balance.toFixed(4);
                 }, 100);
             } else {
-                // გაჩერება
                 isMining = false;
                 circleAnim.classList.remove('active');
                 btnStatus.innerText = "START MINE";
@@ -227,6 +352,18 @@
                 clearInterval(intervalId);
             }
         });
+
+        // გვერდების გადართვის ფუნქცია
+        function switchTab(tabName, el) {
+            // ყველა ფანჯრის დამალვა
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            // ყველა ღილაკის გაუფერულება მენიუში
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            
+            // არჩეული ფანჯრის ჩვენება და ღილაკის გააქტიურება
+            document.getElementById('tab-' + tabName).classList.add('active');
+            el.classList.add('active');
+        }
     </script>
 </body>
 </html>
